@@ -8,6 +8,6 @@ WebKernel is a PHP based website framework, mostly targeting beginners or small 
 WebKernel:
   * Embeds an administration backend for fast and easy setup
   * Only requires HTML/CSS/PHP knowledge; uses PHP as a template language for page rendering
-  * Provides user and rights management
+  * Provides users and rights management
   * Is extensible through native plugin support; a CLI tool helps to fasten plugins development
 
