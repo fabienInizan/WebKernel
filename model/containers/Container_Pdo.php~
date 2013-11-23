@@ -6,7 +6,7 @@ class Container_Pdo
 
 	public function __construct()
 	{
-		$this->_pdo = new PDO('mysql:dbname=webKernel;host=localhost', 'root', 'root');
+		$this->_pdo = new PDO('mysql:dbname=webKernel;host=localhost', 'root', '');
 	}
 
 	public function createEntity($class, array $attributes)
