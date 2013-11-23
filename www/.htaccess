@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule ^admin/$	admin/index.php
+RewriteRule ^admin/index.php$ index.php?spiralMode=admin&%{QUERY_STRING}

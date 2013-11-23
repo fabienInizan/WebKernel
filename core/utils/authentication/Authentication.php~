@@ -1,0 +1,90 @@
+<?php
+
+require_once('core/utils/session/Session.php');
+require_once('core/utils/crypto/Crypto.php');
+require_once('model/containers/UserContainer.php');
+require_once('model/containers/ActionRestrictionContainer.php');
+
+class Authentication
+{
+
+	public static function check($module, $action)
+	{
+		if($module === 'admin' && $action === 'login')
+		{
+			return;
+		}
+		
+		$session = Session::getInstance();
+		
+		$userAccessLevel = 0;
+		if(!empty($session->auth) && $session->auth && !empty($session->userId))
+		{
+			$userContainer = UserContainer::getInstance();
+			$userId = $session->userId;
+			$user = $userContainer->getById($userId);
+			$userAccessLevel = $user->getAccessLevel();		
+		}
+		
+		$actionRestrictionContainer = ActionRestrictionContainer::getInstance();
+		$actionRestriction = $actionRestrictionContainer->getByModuleAndAction($module, $action);
+		$actionRestrictionAccessLevel = $actionRestriction->getAccessLevel();
+		
+		if($userAccessLevel < $actionRestrictionAccessLevel)
+		{
+			header('Location: ?module=admin&action=login');
+			exit();
+		}
+	}
+	
+	public static function login($login, $password)
+	{
+		$user = null;
+		try
+		{
+			$userContainer = UserContainer::getInstance();
+			$user = $userContainer->getByLoginAndPassword($login, Crypto::cryptPassword($password));
+		}
+		catch(Exception $e)
+		{
+			return false;
+		}
+		
+		$session = Session::getInstance();
+		$session->auth = true;
+		$session->userId = $user->getId();
+		
+		return true;
+	}
+	
+	/*public static function check($module, $action)
+	{
+		$restricted = require('config/actions/restricted.php');
+
+		if(empty($restricted[$module]))
+		{
+			return;
+		}
+
+		if(array_search($action, $restricted[$module]) === false)
+		{
+			return;
+		}
+
+		$session = Session::getInstance();
+
+		if(empty($session->auth) || !$session->auth)
+		{
+			header('Location: ?module=admin&action=login');
+			exit();
+		}
+	}*/
+
+	public static function logout()
+	{
+		$session = Session::getInstance();
+		$session->destroy();
+	}
+}
+
+?>
