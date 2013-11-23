@@ -1,6 +1,0 @@
-<h1>WebKernel release 2.0</h1>
-
-<div id="main">
-	<?php echo stripslashes($page->getTitle()); ?>
-	<?php echo stripslashes($file->getTitle()); ?>
-</div>
