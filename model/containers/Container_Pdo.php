@@ -1,12 +1,16 @@
 <?php
 
+require_once('lib/settings/Settings_Config.php');
+
 class Container_Pdo
 {
 	private $_pdo;
 
 	public function __construct()
 	{
-		$this->_pdo = new PDO('mysql:dbname=webKernel;host=localhost', 'root', 'password');
+		$conf = Settings_Config::getInstance();
+		$dsn = $conf->dbType.':dbname='.$conf->dbName.';host='.$conf->dbHost;
+		$this->_pdo = new PDO($dsn, $conf->dbUser, $conf->dbPassword);
 	}
 
 	public function createEntity($class, array $attributes)

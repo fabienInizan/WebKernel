@@ -21,4 +21,13 @@ class SettingsException_FileNotFound extends SettingsException {}
  */
 class SettingsException_ReadOnlyElements extends SettingsException {}
 
+/**
+ * Settings content is invalid
+ *
+ * @package		spiral
+ * @subpackage	core.utils.settings
+ * @author		Fabien INIZAN <fabien.inizan@gmail.com>
+ */
+class SettingsException_InvalidContent extends SettingsException {}
+
 ?>

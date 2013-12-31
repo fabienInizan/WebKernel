@@ -1,10 +1,13 @@
 <?php
 
+require_once('lib/settings/Settings_Config.php');
+
 class Crypto
 {
 	public static function cryptPassword($password)
 	{
-		return explode('$', crypt($password, '$2y$12$webKernelSaltedCrypt$'))[4];
+		$conf = Settings_Config::getInstance();
+		return explode('$', crypt($password, '$2y$12$'.$conf->cryptoSalt.'$'))[4];
 	}
 }
 

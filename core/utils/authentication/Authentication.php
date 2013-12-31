@@ -82,7 +82,7 @@ class Authentication
 			$user = $userContainer->getByLoginAndPassword($login, Crypto::cryptPassword($password));
 		}
 		catch(Exception $e)
-		{
+		{	echo 'exception : '.$e->getMessage();
 			return false;
 		}
 		
