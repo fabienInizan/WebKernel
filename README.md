@@ -49,6 +49,7 @@ The WebKernel defines a default URL which applies when no suffix is given, which
 Plese note that is you only mention the module, the default action is always **index**.
   
 So here is the behinds of the exception: the page with identifier "index" is not found, because it does not exist. Let's create it.
+
 1. Go to the administration interface http://your.domain/admin/ and login.
 2. You should have a "Pages" entry on the menu, click it. If you don't, please read the instructions from the "Installation" section on this README.
 3. A message should inform you that no page have been created yet. Click on "Ajouter une page".
