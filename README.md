@@ -53,9 +53,9 @@ So here is the behinds of the exception: the page with identifier "index" is not
 2. You should have a "Pages" entry on the menu, click it. If you don't, please read the instructions from the "Installation" section on this README.
 3. A message should inform you that no page have been created yet. Click on "Ajouter une page".
 4. A form will show up. Please fill it like follows:
-	* Identifiant: **index**
-	* Titre: **My first page on WebKernel**
-	* Contenu: **Hello World from WebKernel !**
+  * Identifiant: **index**
+  * Titre: **My first page on WebKernel**
+  * Contenu: **Hello World from WebKernel !**
 5. Click the "Ajouter" button. You should have a confirmation with the following message "La page a été ajoutée avec succès !". Click the "Retour aux pages" link.
 6. Your new page should appear on a table. You may eventually edit it by clicking the "Editer" link on the row.
 7. Go back to your public default page http://your.domain. Your newly created page should be displayed.
