@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.8.1deb1
+-- version 4.1.1
 -- http://www.phpmyadmin.net
 --
--- Client: localhost
--- Généré le: Dim 15 Septembre 2013 à 15:38
--- Version du serveur: 5.5.32-0ubuntu0.13.04.1
--- Version de PHP: 5.4.9-4ubuntu2.2
+-- Client :  localhost
+-- Généré le :  Jeu 02 Janvier 2014 à 11:46
+-- Version du serveur :  5.5.34-MariaDB-log
+-- Version de PHP :  5.5.7
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données: `webKernel`
+-- Base de données :  `webKernel`
 --
 
 -- --------------------------------------------------------
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `actionRestriction` (
   `description` varchar(511) DEFAULT NULL,
   `accessLevel` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
 
 --
 -- Contenu de la table `actionRestriction`
@@ -96,7 +96,9 @@ INSERT INTO `actionRestriction` (`id`, `module`, `action`, `description`, `acces
 (33, 'actionRestriction', 'displayDeleteExceptionForm', 'Display the action restriction exception delete form', 255),
 (34, 'actionRestriction', 'addException', 'Add a new action restriction exception', 255),
 (35, 'actionRestriction', 'editException', 'Edit an action restriction exception', 255),
-(36, 'actionRestriction', 'deleteException', 'Delete an action restriction exception', 255);
+(36, 'actionRestriction', 'deleteException', 'Delete an action restriction exception', 255),
+(37, 'admin', 'setMaintenanceMode', 'Switch to maintenance mode', 255),
+(38, 'admin', 'resetMaintenanceMode', 'Resume to normal mode from maintenance mode', 255);
 
 -- --------------------------------------------------------
 
@@ -141,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `alias` varchar(255) DEFAULT NULL,
   `login` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `accessLevel` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT 'From 0 (anonymous visitor) to 99 (master admin)',
+  `accessLevel` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT 'From 0 (anonymous visitor) to 255 (master admin)',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 

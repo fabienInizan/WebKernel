@@ -41,6 +41,30 @@ function _checkDirPermission($dir, $read = True, $write = False)
 	return $bool;
 }
 
+function _checkFilePermission($file, $read = True, $write = False)
+{
+	$bool = True;
+	
+	if(is_file($file))
+	{
+		if($read)
+		{
+			$bool &= is_readable($file);
+		}
+	
+		if($write)
+		{
+			$bool &= is_writeable($file);
+		}
+	}
+	else
+	{
+		$bool = False;
+	}
+	
+	return $bool;
+}
+
 function _buildApacheModuleRow($title, $module, $info)
 {
 	if(_checkApacheModule($module))
@@ -69,9 +93,9 @@ function _buildPHPModuleRow($title, $module, $info)
 	return '<tr><td>'.$title.' ('.$module.')</td><td>'.$info.'</td>'.$status.'</tr>';
 }
 
-function _buildDirPermissionRow($dir, $desiredRead, $desiredWrite, $info)
+function _buildPermissionRow($file, $desiredRead, $desiredWrite, $info, $type = 'dir')
 {
-	$checkDir = '../../'.$dir;
+	$checkPath = '../../'.$file;
 	if($desiredRead)
 	{
 		$desiredReadImg = '<img src="style/images/check.png" title="Accessible en lecture" alt="Accessible en lecture" />';
@@ -90,7 +114,16 @@ function _buildDirPermissionRow($dir, $desiredRead, $desiredWrite, $info)
 		$desiredWriteImg = '<img src="style/images/invalid.png" title="Protégé en écriture" alt="Protégé en écriture" />';
 	}
 	
-	if(_checkDirPermission($checkDir, True, False))
+	if($type == 'dir')
+	{
+		$checkFunction = _checkDirPermission;
+	}
+	else
+	{
+		$checkFunction = _checkFilePermission;
+	}
+	
+	if($checkFunction($checkPath, True, False))
 	{
 		$read = True;
 		$readImg = '<img src="style/images/check.png" title="Accessible en lecture" alt="Accessible en lecture" />';
@@ -101,7 +134,7 @@ function _buildDirPermissionRow($dir, $desiredRead, $desiredWrite, $info)
 		$readImg = '<img src="style/images/invalid.png" title="Protégé en lecture" alt="Protégé en lecture" />';
 	}
 	
-	if(_checkDirPermission($checkDir, False, True))
+	if($checkFunction($checkPath, False, True))
 	{
 		$write = True;
 		$writeImg = '<img src="style/images/check.png" title="Accessible en écriture" alt="Accessible en écriture" />';
@@ -122,13 +155,13 @@ function _buildDirPermissionRow($dir, $desiredRead, $desiredWrite, $info)
 		$statusImg = '<img src="style/images/invalid.png" title="Permissions incorrectes" alt="Permissions incorrectes" />';
 	}
 	
-	$dirCol = '<td>'.$dir.'</td>';
+	$fileCol = '<td>'.$file.'</td>';
 	$descriptionCol = '<td>'.$info.'</td>';
 	$readCol = '<td>'.$readImg.'&nbsp;&nbsp;&nbsp;&nbsp;(désiré : '.$desiredReadImg.')</td>';
 	$writeCol = '<td>'.$writeImg.'&nbsp;&nbsp;&nbsp;&nbsp;(désiré : '.$desiredWriteImg.')</td>';
 	$statusCol = '<td>'.$statusImg.'</td>';
 	
-	return '<tr>'.$dirCol.$descriptionCol.$readCol.$writeCol.$statusCol.'</tr>';
+	return '<tr>'.$fileCol.$descriptionCol.$readCol.$writeCol.$statusCol.'</tr>';
 }
 ?>
 
@@ -212,14 +245,30 @@ function _buildDirPermissionRow($dir, $desiredRead, $desiredWrite, $info)
 	</thead>
 	<tbody>
 		<?php
-			echo _buildDirPermissionRow('config', True, True, 'Contient les fichiers de configuration du noyau. Peut être étendu par des plugins');
-			echo _buildDirPermissionRow('core', True, False, 'Contient les fichiers du noyau');
-			echo _buildDirPermissionRow('lib', True, True, 'Contient les bibliothèques externes. Peut être étendu par des plugins');
-			echo _buildDirPermissionRow('model', True, True, 'Contient les fichiers de modèles (entités) et conteneurs (ORM). Peut être étendu par des plugins');
-			echo _buildDirPermissionRow('modules', True, True, 'Contient les fichiers des controlleurs, c\'est à dire les actions à exécuter par le noyau. Peut être étendu par des plugins');
-			echo _buildDirPermissionRow('plugins', True, True, 'Contient les fichiers spécifiques aux plugins. Sert également de cache pour l\'installation  et la désinstallation des plugins');
-			echo _buildDirPermissionRow('templates', True, True, 'Contient les vues sous forme de template HTML (PHP est utilisé comme moteur de template. Peut être étendu par des plugins');
-			echo _buildDirPermissionRow('www', True, False, 'Le point d\'entrée pour le visiteur. Contient entre autre le fichier principal index.php et les feuilles de style');
+			echo _buildPermissionRow('config', True, True, 'Contient les fichiers de configuration du noyau. Peut être étendu par des plugins');
+			echo _buildPermissionRow('core', True, False, 'Contient les fichiers du noyau');
+			echo _buildPermissionRow('lib', True, True, 'Contient les bibliothèques externes. Peut être étendu par des plugins');
+			echo _buildPermissionRow('model', True, True, 'Contient les fichiers de modèles (entités) et conteneurs (ORM). Peut être étendu par des plugins');
+			echo _buildPermissionRow('modules', True, True, 'Contient les fichiers des controlleurs, c\'est à dire les actions à exécuter par le noyau. Peut être étendu par des plugins');
+			echo _buildPermissionRow('plugins', True, True, 'Contient les fichiers spécifiques aux plugins. Sert également de cache pour l\'installation  et la désinstallation des plugins');
+			echo _buildPermissionRow('templates', True, True, 'Contient les vues sous forme de template HTML (PHP est utilisé comme moteur de template. Peut être étendu par des plugins');
+			echo _buildPermissionRow('www', True, False, 'Le point d\'entrée pour le visiteur. Contient entre autre le fichier principal index.php et les feuilles de style');
+		?>
+	</tbody>
+</table>
+
+<h3>Vérification des permissions sur les fichiers</h2>
+<table>
+	<thead>
+		<th>Fichier</th>
+		<th>Description</th>
+		<th>Droit en lecture</th>
+		<th>Droit en écriture</th>
+		<th>État</th>
+	</thead>
+	<tbody>
+		<?php
+			echo _buildPermissionRow('www/maintenance.html', True, True, 'La page d\'accueil à afficher en cas de maintenance sur le site.', $type = 'file');
 		?>
 	</tbody>
 </table>

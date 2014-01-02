@@ -1,5 +1,23 @@
 <h2>Accueil</h2>
 
+<div id="maintenance">
+<?php
+	require_once('lib/maintenance/MaintenanceHelper.php');
+	if(!MaintenanceHelper::isMaintenanceMode())
+	{
+?>
+	<a href="?module=admin&action=setMaintenanceMode" title="Passer en mode maintenance">Passer en mode maintenance</a>
+<?php
+	}
+	else
+	{
+?>
+	<a href="?module=admin&action=resetMaintenanceMode" title="Sortir du mode maintenance">Sortir du mode maintenance</a>
+<?php
+	}
+?>
+</div>
+
 <div id="content">
 
 	<?php

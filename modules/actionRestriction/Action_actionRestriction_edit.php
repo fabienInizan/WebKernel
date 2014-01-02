@@ -37,7 +37,7 @@ class Action_actionRestriction_edit implements Action
 			else
 			{
 				$actionResponse->setElement('warning', 'Impossible to edit the action restriction. Please check you filled all the required fields with correct values.');
-				$actionResponse->setTemplate('actionRestriction/displayEditForm');
+				$actionResponse->setTemplateId('actionRestriction/displayEditForm');
 			}
 		}
 		else
