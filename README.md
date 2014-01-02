@@ -37,7 +37,7 @@ http:// your.domain/**index.php**?module=**module**&action=**action**&param1=**p
   * **index.php** is the default page; it is not mandatory and may be dropped.
   * **module** is the category of the page to return, such as page, admin or user.
   * **action** is a command-like action which applies to the aformentionned module. The set of actions depends of the module, but some common examples are index, display, add, delete or displayEditForm.
-  * **param1, param2, ...** parameters are optionnal. Some action require parameters to be executed and some does not. For example, when requiring the module page to execute a display action, the identifier of the page to display should be passed as parameter. To display a page with the identifier "mypage", the url suffix will be ?module=page&action=display=pageId=mypage.
+  * **param1, param2, ...** parameters are optional. Some action require parameters to be executed and some does not. For example, when requiring the module page to execute a display action, the identifier of the page to display should be passed as parameter. To display a page with the identifier "mypage", the url suffix will be ?module=page&action=display=pageId=mypage.
   
 ### Setting my first page
 
