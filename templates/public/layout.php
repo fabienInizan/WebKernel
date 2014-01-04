@@ -4,7 +4,7 @@
 
 	<head>	
 		<title>
-			WebKernel start page
+			WebKernel
 		</title>		
 		<link 
 			rel="stylesheet"

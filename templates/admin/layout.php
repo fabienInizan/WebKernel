@@ -9,7 +9,7 @@
 
 	<head>
 		<title>
-			WebKernel - Adminisatration
+			WebKernel - Administration
 		</title>		
 		<link
 			rel="stylesheet"
